@@ -18,6 +18,26 @@ namespace MOD.AuthLibrary.Repositories
             return true;
         }
 
+        public bool BlockUser(MODUser user)
+        {
+            try
+            {
+
+                context.MODUsers.Update(user);
+                int result = context.SaveChanges();
+                if (result > 0) //result>0 since result has no.of records updated
+                {
+                    return true;
+                }
+                return false;
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+        }
+
         public bool DeleteUser(MODUser user)
         {
             try
@@ -36,6 +56,7 @@ namespace MOD.AuthLibrary.Repositories
                 throw;
             }
         }
+
 
         public IEnumerable<MODUser> GetMentors()
         {
@@ -58,6 +79,82 @@ namespace MOD.AuthLibrary.Repositories
         public MODUser GetUser(string id)
         {
             return context.MODUsers.Find(id);
+        }
+
+        public bool UnblockUser(MODUser user)
+        {
+            try
+            {
+
+                context.MODUsers.Update(user);
+                int result = context.SaveChanges();
+                if (result > 0) //result>0 since result has no.of records updated
+                {
+                    return true;
+                }
+                return false;
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+        }
+
+
+        public bool AddTechnology(Technology tech)
+        {
+            try
+            {
+                var technology = new Technology
+                {
+                    TechnologyName = tech.TechnologyName,
+                    Commission = tech.Commission,
+                };
+                context.Technologies.Add(technology);
+                int result = context.SaveChanges();
+                if (result > 0)
+                {
+                    return true;
+                }
+                return false;
+            }
+            catch (Exception e)
+            {
+
+                throw;
+            }
+        }
+
+
+        public bool DeleteTechnology(Technology id)
+        {
+            try
+            {
+                context.Technologies.Remove(id);
+                int result = context.SaveChanges();
+                if (result > 0)
+                {
+                    return true;
+                }
+                return false;
+            }
+            catch (Exception ex)
+            {
+
+                throw;
+            }
+        }
+
+
+       public IEnumerable<Technology> GetTechnologies()
+        {
+            return this.context.Technologies.Select(c => new Technology
+            {
+                Id = c.Id,
+                TechnologyName = c.TechnologyName,
+                Commission = c.Commission
+            });
         }
     }
 }

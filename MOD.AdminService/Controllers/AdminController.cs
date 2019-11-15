@@ -85,5 +85,82 @@ namespace MOD.AdminService.Controllers
             }
             return StatusCode(StatusCodes.Status500InternalServerError);
         }
+
+        //BLOCK: api/Admin/block/{id}
+        [HttpPut("block/{id}")]
+        public IActionResult BlockUser(string id)
+        {
+            var user = repository.GetUser(id);
+            if (user == null)
+            {
+                return NotFound();
+            }
+            if (id == user.Id)
+            {
+                user.Status = "blocked";
+                bool result = repository.BlockUser(user);
+                if (result)
+                {
+                    return Ok();
+                }
+                return StatusCode(StatusCodes.Status500InternalServerError);
+            }
+            return NotFound();
+        }
+
+        //BLOCK: api/Admin/unblock/{id}
+        [HttpPut("unblock/{id}")]
+        public IActionResult UnblockUser(string id)
+        {
+            var user = repository.GetUser(id);
+            if (user == null)
+            {
+                return NotFound();
+            }
+            if (id == user.Id)
+            {
+                user.Status = "active";
+                bool result = repository.UnblockUser(user);
+                if (result)
+                {
+                    return Ok();
+                }
+                return StatusCode(StatusCodes.Status500InternalServerError);
+            }
+            return NotFound();
+        }
+
+
+        [Route("technologylist")]
+        [HttpGet]
+        public IActionResult GetTechnologies()
+        {
+            var technologies = repository.GetTechnologies();
+            if (!technologies.Any())
+            {
+                return NoContent();
+            }
+            return Ok(technologies);
+        }
+
+
+        // POST: api/Admin
+        [Route("addtechnology")]
+        [HttpPost]
+
+        public IActionResult Post([FromBody] Technology technology)
+        {
+            if (ModelState.IsValid)
+            {
+                bool result = repository.AddTechnology(technology);
+                if (result)
+                {
+                    return Created("AddTechnology", technology.Id);
+                }
+                return StatusCode(StatusCodes.Status500InternalServerError);
+            }
+            return BadRequest(ModelState);
+        }
+
     }
 }

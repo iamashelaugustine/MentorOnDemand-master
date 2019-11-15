@@ -48,12 +48,19 @@ namespace MOD.AuthService.Controllers
             var result = await signInManager.PasswordSignInAsync(
                 model.Email_id, model.Pass_word, false, false);
 
-            if (result.Succeeded)
             {
                 var appUser = userManager.Users.SingleOrDefault(
                     r => r.Email == model.Email_id);
-                var response = await GenerateJwtToken(model.Pass_word, appUser);
-                return Ok(response);
+                if (appUser.Status == "active")
+                {
+                    var response = await GenerateJwtToken(model.Pass_word, appUser);
+                    return Ok(response);
+                }
+                else
+                {
+                    return Ok("User blocked");
+                }
+
             }
             return BadRequest(result);
         }

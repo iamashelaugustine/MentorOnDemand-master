@@ -69,7 +69,7 @@ namespace MOD.AdminService.Controllers
         {
         }
 
-        // DELETE: api/Admin/5
+        // DELETE: api/Admin/66
         [HttpDelete("{id}")]
         public IActionResult Delete(string id)
         {

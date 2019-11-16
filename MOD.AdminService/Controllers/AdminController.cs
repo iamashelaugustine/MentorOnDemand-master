@@ -44,13 +44,7 @@ namespace MOD.AdminService.Controllers
             return Ok(stud);
         }
 
-
-        // GET: api/Admin/5
-        [HttpGet("{id}", Name = "Get")]
-        public string Get(int id)
-        {
-            return "value";
-        }
+        
 
         // POST: api/Admin
         [HttpPost]
@@ -156,6 +150,36 @@ namespace MOD.AdminService.Controllers
                 if (result)
                 {
                     return Created("AddTechnology", technology.Id);
+                }
+                return StatusCode(StatusCodes.Status500InternalServerError);
+            }
+            return BadRequest(ModelState);
+        }
+
+
+        // GET: api/Admin/5
+        [HttpGet("technology/{id}", Name = "Get")]
+        public IActionResult Get(int id)
+        {
+            var technologies = repository.GetTechnology(id);
+            if (technologies == null)
+            {
+                return NotFound();
+            }
+            return Ok(technologies);
+        }
+
+
+        // PUT: api/Technology/5
+        [HttpPut("updatetechnology/{id}")] 
+        public IActionResult Put(int id, [FromBody] Technology technology)
+        {
+            if (ModelState.IsValid && id == technology.Id)
+            {
+                bool result = repository.UpdateTechnology(technology);
+                if (result)
+                {
+                    return Ok();
                 }
                 return StatusCode(StatusCodes.Status500InternalServerError);
             }

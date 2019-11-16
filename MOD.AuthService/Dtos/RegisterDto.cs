@@ -18,7 +18,6 @@ namespace MOD.AuthService.Dtos
         public DateTime dob { get; set; }
         [Required]
         public int Role { get; set; }
-
         public string status { get; set; }
     }
 }

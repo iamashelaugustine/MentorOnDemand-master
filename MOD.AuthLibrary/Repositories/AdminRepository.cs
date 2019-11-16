@@ -156,5 +156,30 @@ namespace MOD.AuthLibrary.Repositories
                 Commission = c.Commission
             });
         }
+
+
+        public bool UpdateTechnology(Technology technology)
+        {
+            try
+            {
+                context.Technologies.Update(technology);
+                int result = context.SaveChanges();
+                if (result > 0)
+                {
+                    return true;
+                }
+                return false;
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+        }
+
+        public Technology GetTechnology(int id)
+        {
+            return context.Technologies.Find(id);
+        }
     }
 }

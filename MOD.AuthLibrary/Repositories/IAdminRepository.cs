@@ -18,5 +18,8 @@ namespace MOD.AuthLibrary.Repositories
 
        public bool AddTechnology(Technology technology);
         public IEnumerable<Technology> GetTechnologies();
+
+        Technology GetTechnology(int id);
+        public bool UpdateTechnology(Technology technology);
     }
 }

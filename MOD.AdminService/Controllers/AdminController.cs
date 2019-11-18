@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using MOD.AuthLibrary.Models;
@@ -11,6 +12,7 @@ namespace MOD.AdminService.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+    
     public class AdminController : ControllerBase
     {
         IAdminRepository repository;
@@ -184,6 +186,22 @@ namespace MOD.AdminService.Controllers
                 return StatusCode(StatusCodes.Status500InternalServerError);
             }
             return BadRequest(ModelState);
+        }
+
+        [HttpDelete("technology/{id}")]
+        public IActionResult DeleteTechnology(int id)
+        {
+            var technology = repository.GetTechnology(id);
+            if (technology == null)
+            {
+                return NotFound();
+            }
+            bool result = repository.DeleteTechnology(technology);
+            if (result)
+            {
+                return Ok();
+            }
+            return StatusCode(StatusCodes.Status500InternalServerError);
         }
 
     }

@@ -121,11 +121,19 @@ namespace MOD.AuthService.Controllers
         private async Task<TokenDto> GenerateJwtToken(string email,
             MODUser user)
         {
+
+            //var roles = await userManager.GetRolesAsync(user);
+            //var role = roleManager.Roles.SingleOrDefault(
+            //    r => r.Name == roles.SingleOrDefault());
+
+
+
             var claims = new List<Claim>
             {
                 new Claim(JwtRegisteredClaimNames.Sub, email),
                 new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()),
                 new Claim(ClaimTypes.NameIdentifier, user.Id)
+                //new Claim(ClaimTypes.Role, role.Name)
             };
 
             var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(
@@ -147,7 +155,8 @@ namespace MOD.AuthService.Controllers
             var response = new TokenDto
             {
                 Email_id = email,
-                Token = new JwtSecurityTokenHandler().WriteToken(token)
+                Token = new JwtSecurityTokenHandler().WriteToken(token),
+                //Role = Convert.ToInt32(role.Id)
             };
 
             return response;

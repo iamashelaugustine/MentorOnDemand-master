@@ -13,5 +13,6 @@ namespace MOD.AuthService.Dtos
         public string Email_id { get; set; }
         [Required]
         public string Token { get; set; }
+        public int Role { get; internal set; }
     }
 }

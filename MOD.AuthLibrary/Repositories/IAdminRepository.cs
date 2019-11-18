@@ -21,5 +21,6 @@ namespace MOD.AuthLibrary.Repositories
 
         Technology GetTechnology(int id);
         public bool UpdateTechnology(Technology technology);
+        bool DeleteTechnology(Technology technology);
     }
 }

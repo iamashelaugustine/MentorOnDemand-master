@@ -181,5 +181,60 @@ namespace MOD.AuthLibrary.Repositories
         {
             return context.Technologies.Find(id);
         }
+                
+
+
+        public MODUser GetMentor(string mentormail)
+        {            
+                var mentor = (from a in context.MODUsers
+                              where a.Email == mentormail
+                              select a).First();
+                return mentor;            
+        }
+
+        public bool AddCourse(Course crs)
+        {
+            try
+            {
+                var course = new Course
+                {
+                    TechnologyId = crs.TechnologyId,
+                    MentorId = crs.MentorId,
+                    TechnologyName = crs.TechnologyName,
+                    Commission = crs.Commission,
+                    StartDate = crs.StartDate,
+                    EndDate = crs.EndDate,
+                    CourseFee = crs.CourseFee
+                };
+                context.Courses.Add(course);
+                int result = context.SaveChanges();
+                if (result > 0)
+                {
+                    return true;
+                }
+                return false;
+            }
+            catch (Exception e)
+            {
+
+                throw;
+            }
+        }
+
+        public IEnumerable<Course> GetCourseList(string id)
+        {
+            var course = from a in context.Courses
+                         where a.MentorId == id && a.EndDate >= DateTime.Today
+                         select a;
+            return course;
+        }
+
+        public IEnumerable<Course> GetCompletedCourseList(string id)
+        {
+            var course = from a in context.Courses
+                         where a.MentorId == id && a.EndDate <= DateTime.Today
+                         select a;
+            return course;
+        }
     }
 }

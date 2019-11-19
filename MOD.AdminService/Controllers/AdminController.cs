@@ -12,7 +12,7 @@ namespace MOD.AdminService.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    
+
     public class AdminController : ControllerBase
     {
         IAdminRepository repository;
@@ -46,7 +46,7 @@ namespace MOD.AdminService.Controllers
             return Ok(stud);
         }
 
-        
+
 
         // POST: api/Admin
         [HttpPost]
@@ -173,7 +173,7 @@ namespace MOD.AdminService.Controllers
 
 
         // PUT: api/Technology/5
-        [HttpPut("updatetechnology/{id}")] 
+        [HttpPut("updatetechnology/{id}")]
         public IActionResult Put(int id, [FromBody] Technology technology)
         {
             if (ModelState.IsValid && id == technology.Id)
@@ -202,6 +202,65 @@ namespace MOD.AdminService.Controllers
                 return Ok();
             }
             return StatusCode(StatusCodes.Status500InternalServerError);
+        }
+
+
+        // GET: api/Admin/5
+        [HttpGet("getmentor/{mentormail}")]
+        public IActionResult GetMentor(string mentormail)
+        {
+            var mentor = repository.GetMentor(mentormail);
+            if (mentor == null)
+            {
+                return NotFound();
+            }
+            return Ok(mentor);
+
+
+        }
+
+        // POST: api/Admin/addcourse
+        [Route("addcourse")]
+        [HttpPost]
+
+        public IActionResult Post([FromBody] Course course)
+        {
+            if (ModelState.IsValid)
+            {
+                bool result = repository.AddCourse(course);
+                if (result)
+                {
+                    return Created("AddCourse", course.Id);
+                }
+                return StatusCode(StatusCodes.Status500InternalServerError);
+            }
+            return BadRequest(ModelState);
+        }
+
+
+        [Route("courselist/{id}")]
+        [HttpGet]
+        public IActionResult GetCourseList(string id)
+        {
+            var courses = repository.GetCourseList(id);
+            if (!courses.Any())
+            {
+                return NoContent();
+            }
+            return Ok(courses);
+        }
+
+
+        [Route("completedcourselist/{id}")]
+        [HttpGet]
+        public IActionResult GetCompletedCourseList(string id)
+        {
+            var courses = repository.GetCompletedCourseList(id);
+            if (!courses.Any())
+            {
+                return NoContent();
+            }
+            return Ok(courses);
         }
 
     }

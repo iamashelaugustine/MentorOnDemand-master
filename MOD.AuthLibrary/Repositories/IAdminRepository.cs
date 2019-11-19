@@ -22,5 +22,9 @@ namespace MOD.AuthLibrary.Repositories
         Technology GetTechnology(int id);
         public bool UpdateTechnology(Technology technology);
         bool DeleteTechnology(Technology technology);
+        MODUser GetMentor(string mentormail);
+        public bool AddCourse(Course course);
+        public IEnumerable<Course> GetCourseList(string id);
+        public IEnumerable<Course> GetCompletedCourseList(string id);
     }
 }

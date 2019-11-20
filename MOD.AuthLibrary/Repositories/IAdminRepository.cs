@@ -26,5 +26,7 @@ namespace MOD.AuthLibrary.Repositories
         public bool AddCourse(Course course);
         public IEnumerable<Course> GetCourseList(string id);
         public IEnumerable<Course> GetCompletedCourseList(string id);
+        public IEnumerable<Course> GetCourses();
+        public bool UpdateProfile(Mentorprofile profile);
     }
 }

@@ -263,5 +263,36 @@ namespace MOD.AdminService.Controllers
             return Ok(courses);
         }
 
+        [Route("courses")]
+        [HttpGet]
+        public IActionResult GetCourses()
+        {
+            var courses = repository.GetCourses();
+            if (!courses.Any())
+            {
+                return NoContent();
+            }
+            return Ok(courses);
+        }
+
+
+        // POST: api/Admin/addcourse
+        [Route("mentorupdateprofile")]
+        [HttpPost]
+
+        public IActionResult UpdateProfile([FromBody] Mentorprofile profile)
+        {
+            if (ModelState.IsValid)
+            {
+                bool result = repository.UpdateProfile(profile);
+                if (result)
+                {
+                    return Created("UpdateProfile", profile.Id);
+                }
+                return StatusCode(StatusCodes.Status500InternalServerError);
+            }
+            return BadRequest(ModelState);
+        }
+
     }
 }

@@ -236,5 +236,40 @@ namespace MOD.AuthLibrary.Repositories
                          select a;
             return course;
         }
+
+        public IEnumerable<Course> GetCourses()
+        {
+            var courses = from a in context.Courses                         
+                         select a;
+            return courses;
+        }
+
+        public bool UpdateProfile(Mentorprofile profile)
+        {
+            try
+            {
+                var prof = new Mentorprofile
+                {
+                    MentorId = profile.MentorId,
+                    Name = profile.Name,
+                    LinkedinId = profile.LinkedinId,
+                    Experience = profile.Experience,
+                    TimeSlot = profile.TimeSlot
+                    
+                };
+                context.Mentorprofiles.Add(prof);
+                int result = context.SaveChanges();
+                if (result > 0)
+                {
+                    return true;
+                }
+                return false;
+            }
+            catch (Exception e)
+            {
+
+                throw;
+            }
+        }
     }
 }

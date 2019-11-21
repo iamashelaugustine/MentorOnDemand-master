@@ -28,5 +28,10 @@ namespace MOD.AuthLibrary.Repositories
         public IEnumerable<Course> GetCompletedCourseList(string id);
         public IEnumerable<Course> GetCourses();
         public bool UpdateProfile(Mentorprofile profile);
+        Mentorprofile GetMentorProfile(string id);
+        MODUser GetUserByMail(string usermail);
+        public bool AddTraining(Training training);
+        public IEnumerable<Training> GetTrainingList(string id);
+        public IEnumerable<Training> GetCompletedTrainingList(string id);
     }
 }

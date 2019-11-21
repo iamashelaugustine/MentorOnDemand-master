@@ -43,5 +43,6 @@ namespace MOD.AuthLibrary
        public DbSet<Technology> Technologies { get; set; }
         public DbSet<Course> Courses { get; set; }
         public DbSet<Mentorprofile> Mentorprofiles { get; set; }
+        public DbSet<Training> Trainings { get; set; }
     }
 }

@@ -4,14 +4,16 @@ using MOD.AuthLibrary;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace MOD.AuthLibrary.Migrations
 {
     [DbContext(typeof(MODContext))]
-    partial class MODContextModelSnapshot : ModelSnapshot
+    [Migration("20191121074034_TwelfthMigration")]
+    partial class TwelfthMigration
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -124,7 +126,7 @@ namespace MOD.AuthLibrary.Migrations
                     b.ToTable("Technologies");
                 });
 
-            modelBuilder.Entity("MOD.AuthLibrary.Models.Training", b =>
+            modelBuilder.Entity("MOD.AuthLibrary.Models.UserTraining", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -134,18 +136,8 @@ namespace MOD.AuthLibrary.Migrations
                     b.Property<int>("CourseFee")
                         .HasColumnType("int");
 
-                    b.Property<DateTime>("EndDate")
-                        .HasColumnType("datetime2");
-
-                    b.Property<DateTime>("StartDate")
-                        .HasColumnType("datetime2");
-
                     b.Property<int>("TechnologyId")
                         .HasColumnType("int");
-
-                    b.Property<string>("TechnologyName")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("UserId")
                         .IsRequired()
@@ -186,21 +178,21 @@ namespace MOD.AuthLibrary.Migrations
                         new
                         {
                             Id = "1",
-                            ConcurrencyStamp = "3337de1c-b491-4add-9a53-63b6dcab5df4",
+                            ConcurrencyStamp = "51d7acf1-a27b-4273-8dfc-72c5fec46c18",
                             Name = "Admin",
                             NormalizedName = "Admin"
                         },
                         new
                         {
                             Id = "2",
-                            ConcurrencyStamp = "22d83ef6-c969-4f36-b163-105b40b640f7",
+                            ConcurrencyStamp = "31940847-6da0-48c7-ae7e-219c4b90079a",
                             Name = "Mentor",
                             NormalizedName = "Mentor"
                         },
                         new
                         {
                             Id = "3",
-                            ConcurrencyStamp = "282fe106-5fdb-4edb-97e5-dfce7131c4c9",
+                            ConcurrencyStamp = "4491122e-040a-4578-ae78-a03c1d318be7",
                             Name = "Student",
                             NormalizedName = "Student"
                         });

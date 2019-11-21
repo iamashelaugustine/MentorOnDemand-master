@@ -215,8 +215,6 @@ namespace MOD.AdminService.Controllers
                 return NotFound();
             }
             return Ok(mentor);
-
-
         }
 
         // POST: api/Admin/addcourse
@@ -294,5 +292,73 @@ namespace MOD.AdminService.Controllers
             return BadRequest(ModelState);
         }
 
+
+        // GET: api/Admin/5
+        [HttpGet("getmentorprofile/{id}")]
+        public IActionResult GetMentorProfile(string id)
+        {
+            var mentor = repository.GetMentorProfile(id);
+            if (mentor == null)
+            {
+                return NotFound();
+            }
+            return Ok(mentor);
+        }
+
+        // GET: api/Admin/5
+        [HttpGet("getuserid/{usermail}")]
+        public IActionResult GetUserByMail(string usermail)
+        {
+            var user = repository.GetUserByMail(usermail);
+            if (user == null)
+            {
+                return NotFound();
+            }
+            return Ok(user);
+        }
+
+
+        // POST: api/Admin
+        [Route("addtraining")]
+        [HttpPost]
+
+        public IActionResult Post([FromBody] Training training)
+        {
+            if (ModelState.IsValid)
+            {
+                bool result = repository.AddTraining(training);
+                if (result)
+                {
+                    return Created("AddTraining", training.Id);
+                }
+                return StatusCode(StatusCodes.Status500InternalServerError);
+            }
+            return BadRequest(ModelState);
+        }
+
+        [Route("traininglist/{id}")]
+        [HttpGet]
+        public IActionResult GetTrainingList(string id)
+        {
+            var trainings = repository.GetTrainingList(id);
+            if (!trainings.Any())
+            {
+                return NoContent();
+            }
+            return Ok(trainings);
+        }
+
+
+        [Route("completedtraininglist/{id}")]
+        [HttpGet]
+        public IActionResult GetCompletedTrainingList(string id)
+        {
+            var trainings = repository.GetCompletedTrainingList(id);
+            if (!trainings.Any())
+            {
+                return NoContent();
+            }
+            return Ok(trainings);
+        }
     }
 }
